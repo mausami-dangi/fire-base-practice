@@ -21,5 +21,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
 
     private void sendRegistrationToServer(String refreshedToken) {
+        new PreferenceManager(this).putPreference("TOKEN", "refreshedToken", refreshedToken);
     }
 }
