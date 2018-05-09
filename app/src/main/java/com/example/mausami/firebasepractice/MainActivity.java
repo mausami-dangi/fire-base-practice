@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.example.mausami.firebasepractice.helpers.SharedPreferencesHelper;
 import com.example.mausami.firebasepractice.retrofit.APIClient;
 import com.example.mausami.firebasepractice.retrofit.APIInterface;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import okhttp3.ResponseBody;
@@ -42,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         txtResponse.setText("Your Firebase token... \n\n"+ TOKEN[0]);
 
+        // Set txtMessage[EditText] textChangeListener to get message
         txtMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
+        // Set txtDeviceToken[EditText] textChangeListener to update token
         txtDeviceToken.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
+        // Set btnCopyToken[Button] clickListener to copy token in Clipboard
         btnCopyToken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,22 +85,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Set btnSendMessage[Button] clickListener to call API [POST] /fcm/send
         btnSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create notification object
                 JsonObject notification = new JsonObject();
                 notification.addProperty("title", "Got a new notification from FCM");
                 notification.addProperty("body", "Message: "+ message[0]);
 
+                // Create complete json including notification object
                 JsonObject json = new JsonObject();
                 json.addProperty("to", TOKEN[0]);
                 json.add("notification", notification);
 
                 txtResponse.setText("Sending notification to... \n\n"+ TOKEN[0]);
+
+                // Call API
                 retrofit2.Call<ResponseBody> loadChanges = APIClient.getClient()
                         .create(APIInterface.class)
                         .sendNotification(json);
 
+                // Load Response
                 loadChanges.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(retrofit2.Call<ResponseBody> call, Response<ResponseBody> response) {
