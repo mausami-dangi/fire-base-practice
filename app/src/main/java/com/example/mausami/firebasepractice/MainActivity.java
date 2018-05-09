@@ -1,5 +1,8 @@
 package com.example.mausami.firebasepractice;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mausami.firebasepractice.helpers.SharedPreferencesHelper;
 import com.example.mausami.firebasepractice.retrofit.APIClient;
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText txtMessage = findViewById(R.id.txtMessage);
         final EditText txtDeviceToken = findViewById(R.id.txtDeviceToken);
         Button btnSendMessage = findViewById(R.id.btnSendMessage);
+        Button btnCopyToken = findViewById(R.id.btnCopyToken);
         final String[] message = {""};
 
         txtResponse.setText("Your Firebase token... \n\n"+ TOKEN[0]);
@@ -66,6 +71,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {}
+        });
+
+        btnCopyToken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("FIREBASE_TOKEN", SharedPreferencesHelper.getString(SharedPreferencesHelper.FIREBASE_TOKEN, getApplicationContext()));
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "Token copied successfully", Toast.LENGTH_LONG).show();
+            }
         });
 
         btnSendMessage.setOnClickListener(new View.OnClickListener() {
