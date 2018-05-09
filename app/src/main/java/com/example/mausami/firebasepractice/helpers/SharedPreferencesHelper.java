@@ -1,4 +1,4 @@
-package com.example.mausami.firebasepractice;
+package com.example.mausami.firebasepractice.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
