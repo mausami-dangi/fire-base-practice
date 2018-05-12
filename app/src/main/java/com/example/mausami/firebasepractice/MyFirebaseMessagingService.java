@@ -15,17 +15,24 @@ import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = "MESSAGE_SERVICE";
+    private static final String TAG = "FDM_SERVICE";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //Log data to Log Cat
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
-        //create notification
+
+        // Create notification to device
         createNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
     }
 
+    /**
+     * Create notification on device
+     *
+     * @param title
+     * @param messageBody
+     */
     private void createNotification(String title, String messageBody) {
         Intent intent = new Intent( this , MainActivity. class );
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
