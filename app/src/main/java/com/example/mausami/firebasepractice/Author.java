@@ -7,6 +7,7 @@ class Author implements IUser {
     private String name;
     private String avatar;
 
+
     public Author(String id, String name, String avatar) {
         this.id = id;
         this.name = name;

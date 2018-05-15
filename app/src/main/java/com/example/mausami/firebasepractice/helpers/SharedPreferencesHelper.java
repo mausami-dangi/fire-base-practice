@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 
 public class SharedPreferencesHelper {
     public static String FIREBASE_TOKEN = "FIREBASE_TOKEN";
+    public static String MESSAGE_FROM = "MESSAGE_FROM";
+    public static String MESSAGE_BODY = "MESSAGE_BODY";
     private static SharedPreferences sharedPreferences = null;
     private static SharedPreferences.Editor editor = null;
 
